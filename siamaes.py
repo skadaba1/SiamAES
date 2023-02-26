@@ -140,8 +140,8 @@ best_val_loss = float("inf")
 exp_name = args.filename
 progress_bar = tqdm(range(num_training_steps))
 
-train_loss = [];
-val_loss = [];
+train_loss_history = [];
+val_loss_history = [];
 
 for epoch in range(num_epochs):
   # training
@@ -170,8 +170,8 @@ for epoch in range(num_epochs):
       val_loss += output.loss
   
   avg_val_loss = val_loss / len(eval_dataloader)
-  train_loss.append(avg_train_loss);
-  val_loss.append(avg_val_loss);
+  train_loss_history.append(avg_train_loss);
+  val_loss_history.append(avg_val_loss);
   print(f"Epoch {epoch+1}" + " | " + f"Training loss: {avg_train_loss}" + " | " + f"Validation loss: {avg_val_loss}")
   if avg_val_loss < best_val_loss:
       print("Saving checkpoint!")
@@ -200,7 +200,7 @@ for batch_i, batch in enumerate(test_dataloader):
 
 exp_meta = dict();
 exp_meta.results = {'testing': {'labels':labels_test, "predictions": predictions_test},
-                  'training':train_loss, 'validation':val_loss}
+                  'training':train_loss_history, 'validation':val_loss_history}
 exp_meta.data = {'prompt':prompt, 'training': train_sz, "validation":val_sz, "testing":test_sz}
 exp_meta.training_params = {'num_epochs':num_epochs, 'batch_size':batch_size, 'num_classes':num_classes}
 
