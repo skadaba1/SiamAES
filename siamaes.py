@@ -131,7 +131,7 @@ class BaselineModel(torch.nn.Module):
 num_epochs = int(args.n_epochs);
 num_training_steps = num_epochs * len(train_dataloader)
 model = BaselineModel(num_classes)
-#model = model.to(device);
+model = model.to(device);
 optimizer = AdamW(model.parameters(), lr=5e-5, weight_decay=0.01)
 lr_scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=0, num_training_steps=num_training_steps)
 
@@ -148,7 +148,7 @@ for epoch in range(num_epochs):
   model.train()
   train_loss = 0;
   for batch_i, batch in enumerate(train_dataloader):
-      #batch = {k: v.to(device) for k, v in batch.items()}
+      batch = {k: v.to(device) for k, v in batch.items()}
       # batch = ([text1, text2], [0, 1])
       output = model(**batch)
       
@@ -164,7 +164,7 @@ for epoch in range(num_epochs):
   model.eval()
   val_loss = 0;
   for batch_i, batch in enumerate(eval_dataloader):
-      #batch = {k: v.to(device) for k, v in batch.items()}
+      batch = {k: v.to(device) for k, v in batch.items()}
       with torch.no_grad():
           output = model(**batch)
       val_loss += output.loss
@@ -189,7 +189,7 @@ model.eval()
 predictions_test = [];
 labels_test = [];
 for batch_i, batch in enumerate(test_dataloader):
-  #batch = {k: v.to(device) for k, v in batch.items()}
+  batch = {k: v.to(device) for k, v in batch.items()}
   with torch.no_grad():
       output = model(**batch)
   loss = output.loss;
