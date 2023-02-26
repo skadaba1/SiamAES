@@ -182,7 +182,7 @@ for epoch in range(num_epochs):
           'optimizer_state_dict': optimizer.state_dict(),
           'val_loss': best_val_loss,
           },
-          f"/checkpoints/epoch_{epoch}.pt"
+          f"epoch_{epoch}.pt"
       )
 
 model.eval()
