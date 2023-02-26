@@ -95,7 +95,7 @@ eval_dataloader = DataLoader(tokenized_dataset['val'], batch_size=batch_size, sh
 test_dataloader = DataLoader(tokenized_dataset['test'], batch_size=1)
 
 class BaselineModel(torch.nn.Module):
-  def __init__(self,num_labels=2):
+  def __init__(self,num_labels=13):
     super(BaselineModel,self).__init__() 
     self.num_labels = num_labels 
 
@@ -130,7 +130,7 @@ class BaselineModel(torch.nn.Module):
 
 num_epochs = int(args.n_epochs);
 num_training_steps = num_epochs * len(train_dataloader)
-model = BaselineModel(num_classes)
+model = BaselineModel()
 model = model.to(device);
 optimizer = AdamW(model.parameters(), lr=5e-5, weight_decay=0.01)
 lr_scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=0, num_training_steps=num_training_steps)
