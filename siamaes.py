@@ -71,7 +71,7 @@ num_classes = args.n_classes;
 dataset, classes = normalize_scores(dataset, num_classes);
 prompt = str(args.prompt);
 sz = len(dataset[prompt])
-train_sz, val_sz, test_sz = math.floor(0.5*sz), math.floor(0.25*sz), math.floor(0.25*sz)
+train_sz, val_sz, test_sz = math.floor(0.05*sz), math.floor(0.025*sz), math.floor(0.025*sz)
 num_classes = classes[prompt]
 dataset = DatasetDict(
     train=dataset[prompt].shuffle(seed=1111).select(range(train_sz)),
