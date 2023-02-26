@@ -71,7 +71,7 @@ num_classes = args.n_classes;
 dataset, classes = normalize_scores(dataset, num_classes);
 prompt = str(args.prompt);
 sz = len(dataset[prompt])
-train_sz, val_sz, test_sz = math.floor(0.05*sz), math.floor(0.025*sz), math.floor(0.025*sz)
+train_sz, val_sz, test_sz = math.floor(0.5*sz), math.floor(0.25*sz), math.floor(0.25*sz)
 num_classes = classes[prompt]
 dataset = DatasetDict(
     train=dataset[prompt].shuffle(seed=1111).select(range(train_sz)),
@@ -199,10 +199,10 @@ for batch_i, batch in enumerate(test_dataloader):
   labels_test.append(truth);
 
 exp_meta = dict();
-exp_meta.results = {'testing': {'labels':labels_test, "predictions": predictions_test},
+exp_meta['results'] = {'testing': {'labels':labels_test, "predictions": predictions_test},
                   'training':train_loss_history, 'validation':val_loss_history}
-exp_meta.data = {'prompt':prompt, 'training': train_sz, "validation":val_sz, "testing":test_sz}
-exp_meta.training_params = {'num_epochs':num_epochs, 'batch_size':batch_size, 'num_classes':num_classes}
+exp_meta['data'] = {'prompt':prompt, 'training': train_sz, "validation":val_sz, "testing":test_sz}
+exp_meta['training_params'] = {'num_epochs':num_epochs, 'batch_size':batch_size, 'num_classes':num_classes}
 
 
 with open(exp_name + '.pickle', 'wb') as handle:
